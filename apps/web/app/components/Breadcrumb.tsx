@@ -69,7 +69,7 @@ export function Breadcrumb({
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-text12">
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text12">
         <li>
           <Link href="/" className="text-foreground/60 hover:text-foreground">
             {homeLabel}

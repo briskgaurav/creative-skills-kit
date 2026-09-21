@@ -2,7 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { listSkills, getSkill } from "../../lib/skills";
 import { CodeBlock } from "../../components/CodeBlock";
+import { CopyButton } from "../../components/CopyButton";
 import { Breadcrumb } from "../../components/Breadcrumb";
+import { InstallCommand } from "../../components/InstallCommand";
+import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
   return listSkills().map((skill) => ({ slug: skill.slug }));
@@ -38,6 +41,24 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * First one or two paragraphs of the SKILL.md body, headings stripped —
+ * used as a short "what it does" lead-in above the raw source dump.
+ */
+function leadParagraphs(body: string) {
+  const withoutHeadings = body
+    .split("\n")
+    .filter((line) => !line.trim().startsWith("#"))
+    .join("\n");
+
+  return withoutHeadings
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .filter((p) => !p.startsWith("```") && !p.startsWith("|") && !p.startsWith("-"))
+    .slice(0, 2);
+}
+
 export default async function SkillPage({
   params,
 }: PageProps<"/skills/[slug]">) {
@@ -47,71 +68,90 @@ export default async function SkillPage({
   if (!skill) notFound();
 
   const facts = [
-    { label: "Slug", value: skill.slug, mono: true },
+    { label: "Slug", value: skill.slug },
     skill.category && { label: "Category", value: skill.category },
-    skill.version && { label: "Version", value: skill.version, mono: true },
+    skill.version && { label: "Version", value: skill.version },
     skill.license && { label: "License", value: skill.license },
-  ].filter(Boolean) as { label: string; value: string; mono?: boolean }[];
+  ].filter(Boolean) as { label: string; value: string }[];
+
+  const lead = leadParagraphs(skill.body);
+  const lineCount = skill.body.split("\n").length;
 
   return (
     <div className="flex flex-1 flex-col bg-background font-sans">
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-10 px-6 py-16 sm:px-16">
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-6 py-16 sm:px-16">
         <Breadcrumb
           labels={{ skills: "Skills", [skill.slug]: displayName(skill.name) }}
           unlinked={["skills"]}
         />
 
-        <header className="flex flex-col gap-4">
-          <h1 className="text-text32 font-semibold text-balance text-foreground">
+        <header className="flex flex-col gap-4 mt-10">
+          <h1 className="text32 font-medium uppercase text-balance text-foreground">
             {displayName(skill.name)}
           </h1>
 
           {skill.description && (
-            <p className="max-w-2xl text-text18 text-pretty text-foreground/60">
+            <p className="max-w-2xl text12 text-pretty text-foreground/60">
               {skill.description}
             </p>
           )}
 
           {skill.tags && skill.tags.length > 0 && (
-            <p className="text-text12 text-foreground/40">{skill.tags.join(" · ")}</p>
+            <p className="text12 text-foreground/40">{skill.tags.join(" · ")}</p>
           )}
         </header>
 
-        <dl className="flex flex-wrap gap-x-10 gap-y-4 border-y border-foreground/20 py-4">
-          {facts.map((fact) => (
-            <div key={fact.label} className="flex flex-col gap-0.5">
-              <dt className="text-text12 text-foreground/40">{fact.label}</dt>
-              <dd className={`text-text12 text-foreground ${fact.mono ? "font-mono" : ""}`}>
-                {fact.value}
-              </dd>
+        {lead.length > 0 && (
+          <section className="flex flex-col gap-3 bg-foreground/4 p-6">
+            <h2 className="text12 font-medium uppercase tracking-wider text-foreground/60">
+              What it does
+            </h2>
+            <div className="flex max-w-2xl mt-2 flex-col gap-2">
+              {lead.map((paragraph, i) => (
+                <p key={i} className="text12 text-pretty text-foreground/70">
+                  {paragraph}
+                </p>
+              ))}
             </div>
-          ))}
-        </dl>
+          </section>
+        )}
 
-        <section className="flex flex-col gap-2.5">
-          <h2 className="text-text12 font-medium uppercase tracking-wider text-foreground/60">
-            Install
-          </h2>
-          <CodeBlock
-            label="terminal"
-            code={`npx creative-skills-kit install ${skill.slug}`}
-          />
+        <section className="flex flex-col gap-4 bg-foreground/4 p-6">
+          <div className="flex mb-2 flex-col gap-4">
+            <h2 className="text12 font-medium uppercase tracking-wider text-foreground/60">
+              Install
+            </h2>
+            <p className="max-w-2xl text12 text-foreground/60">
+              Global installs the skill once for every project. This project
+              only copies it into this repo. Pick your agent — the install
+              path differs between them.
+            </p>
+          </div>
+
+          <InstallCommand slug={skill.slug} />
         </section>
 
-        <section className="flex flex-col gap-2.5">
-          <h2 className="text-text12 font-medium uppercase tracking-wider text-foreground/60">
-            SKILL.md
-          </h2>
+        <section className="flex flex-col gap-3 bg-foreground/4 p-6">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text12 font-medium uppercase tracking-wider text-foreground/60">
+              SKILL.md
+            </h2>
+            <div className="flex items-center gap-2">
+              <span className="text12 text-foreground/40">{lineCount} lines</span>
+              <CopyButton text={skill.body} />
+            </div>
+          </div>
           <CodeBlock
-            label="SKILL.md"
+            className="bg-transparent mt-4"
             code={skill.body}
+            showHeader={false}
             collapsible
             collapsedHeight={460}
           />
         </section>
 
-        <Link href="/" className="w-fit text-text12 text-foreground/60 hover:text-foreground">
-          ← All skills
+        <Link href="/" className="w-fit text12 text-foreground/60 hover:text-foreground flex gap-2 items-center">
+          <ArrowLeft  className="size-4" /> Back
         </Link>
       </main>
     </div>

@@ -18,22 +18,30 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-roboto);
-  --font-mono: var(--font-roboto-mono);
+}
 
-  /* Typography scale. Pure vw sizes (no clamp) based on text12 = 1vw. */
-  --text-text120: 10vw;
-  --text-text120--line-height: 0.95;
-  --text-text120--letter-spacing: -0.03em;
+/* Typography scale. Pure vw sizes (no clamp) based on text12 = 1vw.
+   Tracking lives here per variant — don't apply tracking-* utilities on text elements directly. */
+.text120 {
+  font-size: 10vw;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
 
-  --text-text32: 2vw;
-  --text-text32--line-height: 1.2;
-  --text-text32--letter-spacing: -0.02em;
+.text32 {
+  font-size: 2vw;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
 
-  --text-text18: 1.34vw;
-  --text-text18--line-height: 1.55;
+.text18 {
+  font-size: 1.34vw;
+  line-height: 1.55;
+}
 
-  --text-text12: .95vw;
-  --text-text12--line-height: 1.5;
+.text12 {
+  font-size: .95vw;
+  line-height: 1.5;
 }
 
 body {
