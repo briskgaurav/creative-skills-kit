@@ -1,6 +1,6 @@
 {
   "name": "creative-skills-kit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Installer and validator CLI for creative-skills-kit skill packages. Zero runtime dependencies.",
   "type": "module",
   "bin": {

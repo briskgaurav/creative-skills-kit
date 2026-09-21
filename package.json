@@ -1,6 +1,6 @@
 {
   "name": "creative-skills-kit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "An installable kit of creative skills and coding standards: a Node.js CLI installer/validator plus a Next.js web registry and catalog.",
   "workspaces": [

@@ -1,8 +1,24 @@
 import { existsSync } from "node:fs";
+import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { dirname, join, resolve } from "node:path";
 
 const CLI_PKG_DIR = dirname(dirname(fileURLToPath(import.meta.url))); // packages/cli
+
+/**
+ * Turns `~` / `~/foo` into the real home directory on every OS.
+ * Relative paths still resolve from the current working directory.
+ *
+ * @param {string} input
+ * @returns {string}
+ */
+function resolveUserPath(input) {
+  if (input === "~") return homedir();
+  if (input.startsWith("~/") || input.startsWith("~\\")) {
+    return join(homedir(), input.slice(2));
+  }
+  return resolve(process.cwd(), input);
+}
 
 /**
  * Resolves where the skill sources live.
@@ -18,7 +34,7 @@ const CLI_PKG_DIR = dirname(dirname(fileURLToPath(import.meta.url))); // package
  */
 export function resolveSkillsRoot(opts = {}) {
   if (opts.source) {
-    const explicit = resolve(process.cwd(), opts.source);
+    const explicit = resolveUserPath(opts.source);
     if (!existsSync(explicit)) {
       throw new Error(`--source directory not found: ${explicit}`);
     }
@@ -45,5 +61,5 @@ export function resolveSkillsRoot(opts = {}) {
  * @returns {string}
  */
 export function resolveInstallTarget(opts = {}) {
-  return resolve(process.cwd(), opts.dir ?? ".claude/skills");
+  return resolveUserPath(opts.dir ?? ".claude/skills");
 }
