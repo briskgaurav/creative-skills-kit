@@ -27,12 +27,12 @@ const AGENTS = [
 
 export function AskAi() {
   return (
-    <section className="relative flex flex-col items-center justify-center rounded-2xl  text-center gap-4 overflow-hidden">
-      <h2 className="text12 font-light text-foreground/60 tracking-wide capatilize">
+    <section className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl text-center gap-4 max-md:gap-3">
+      <h2 className="text12 font-light tracking-wide text-foreground/60 capatilize">
         Ask AI About This Package
       </h2>
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-4 max-md:gap-3">
         {AGENTS.map((agent) => (
           <a
             key={agent.name}
@@ -40,9 +40,9 @@ export function AskAi() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Ask ${agent.name}`}
-            className="group relative size-10 shrink-0 transition-transform active:scale-95 focus:outline-none"
+            className="group relative size-[2.2vw] shrink-0 transition-transform active:scale-95 focus:outline-none max-md:size-10"
           >
-            <div className="absolute inset-0 rounded-xl overflow-hidden transition-transform duration-300 cursor-pointer flex items-center justify-center">
+            <div className="absolute inset-0 flex cursor-pointer items-center justify-center overflow-hidden rounded-xl transition-transform duration-300">
               <img
                 src={agent.icon}
                 alt=""

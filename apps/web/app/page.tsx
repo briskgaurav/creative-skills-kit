@@ -10,7 +10,7 @@ export default function Home() {
   const skills = listSkills();
 
   return (
-    <div className="flex flex-1 flex-col bg-background font-sans">
+    <div className="flex flex-1 max-md:mt-10 flex-col bg-background font-sans">
       <div className="mx-auto max-md:max-w-[100vw] flex w-full max-w-[50vw] flex-1 flex-col gap-10 px-6 py-16 sm:px-16">
         <header className="flex flex-col gap-2">
           <p className="text-text12 font-medium uppercase tracking-wider text-foreground/60">
@@ -27,21 +27,21 @@ export default function Home() {
             Install any of them into a project with the CLI:
           </p>
 
-          <div className="mt-4 flex w-fit items-center gap-4">
-            <CornerSpans className="w-fit" borderClassName="border-foreground">
-              <pre className="overflow-x-auto bg-foreground/20 px-[1vw] py-[.4vw] font-sans text-text12 text-foreground">
+          <div className="mt-4 flex w-fit max-w-full items-center gap-4 max-md:gap-2">
+            <CornerSpans className="min-w-0 w-fit max-w-full" borderClassName="border-foreground">
+              <pre className="overflow-x-auto bg-foreground/20 px-[1vw] py-[.4vw] font-sans text-text12 text-foreground max-md:px-3 max-md:py-2">
                 {INSTALL_COMMAND}
               </pre>
             </CornerSpans>
             <CopyButton
               text={INSTALL_COMMAND}
-              className="size-5!"
-              iconClassName="!size-full"
+              className="size-[1.4vw]! shrink-0 max-md:size-5!"
+              iconClassName="size-full!"
             />
           </div>
         </header>
 
-        <section className="flex -mt-8  py-10 flex-col gap-2.5">
+        <section className="flex -mt-8  pt-10 flex-col gap-2.5">
           <div className="uppercase opacity-60">
             <p className="text12">[ Available Skills : {skills.length} ]</p>
           </div>

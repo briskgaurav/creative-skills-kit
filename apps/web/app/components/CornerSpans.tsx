@@ -14,7 +14,7 @@ export function CornerSpans({
   ...props
 }: CornerSpansProps) {
   return (
-    <div className={`relative p-[.2vw] ${className}`} {...props}>
+    <div className={`relative p-[.2vw] max-md:p-0.5 ${className}`} {...props}>
       <span
         aria-hidden
         className={`${size} top-0 left-0 max-md:top-[-.5vw] max-md:left-[-.5vw] border-t border-l ${borderClassName}`}

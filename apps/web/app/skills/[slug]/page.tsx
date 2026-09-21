@@ -78,14 +78,14 @@ export default async function SkillPage({
   const lineCount = skill.body.split("\n").length;
 
   return (
-    <div className="flex flex-1 flex-col bg-background font-sans">
+    <div className="flex max-md:mt-10 flex-1 flex-col bg-background font-sans">
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-6 py-16 sm:px-16">
         <Breadcrumb
           labels={{ skills: "Skills", [skill.slug]: displayName(skill.name) }}
           unlinked={["skills"]}
         />
 
-        <header className="flex flex-col gap-4 mt-10">
+        <header className="flex flex-col gap-4 mt-10 max-md:mt-0">
           <h1 className="text32 font-medium uppercase text-balance text-foreground">
             {displayName(skill.name)}
           </h1>
