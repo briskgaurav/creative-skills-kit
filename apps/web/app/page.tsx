@@ -26,7 +26,7 @@ export default function Home() {
 
           <CornerSpans className="mt-4 w-fit" borderClassName="border-foreground">
             <pre className="overflow-x-auto bg-foreground/20 px-[1vw] py-[.4vw] font-sans text-text12 text-foreground">
-              npx creative-skills-kit install &lt;skill-name&gt;
+              npx creative-skills-kit install &lt;slug-name&gt;
             </pre>
           </CornerSpans>
         </header>

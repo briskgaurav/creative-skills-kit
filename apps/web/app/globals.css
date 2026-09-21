@@ -1,17 +1,15 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+}
+
+:root[data-theme="light"] {
   color-scheme: light;
   --background: #fafafa;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --background: #0a0a0a;
-    --foreground: #fafafa;
-  }
 }
 
 @theme inline {
@@ -79,4 +77,34 @@ body {
 html {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+/* Theme toggle: circular clip-path reveal from the click origin, driven
+   through the View Transitions API. The incoming theme's snapshot expands
+   as a growing circle instead of the browser's default cross-fade. */
+@supports (view-transition-name: root) {
+  ::view-transition-group(root) {
+    animation-duration: 0.6s;
+  }
+
+  ::view-transition-old(root) {
+    animation: none;
+  }
+
+  ::view-transition-new(root) {
+    animation: theme-reveal 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    mix-blend-mode: normal;
+  }
+
+  @keyframes theme-reveal {
+    from {
+      clip-path: circle(0px at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
+    }
+    to {
+      clip-path: circle(
+        var(--theme-toggle-radius, 150%) at var(--theme-toggle-x, 50%)
+          var(--theme-toggle-y, 50%)
+      );
+    }
+  }
 }

@@ -150,7 +150,10 @@ export default async function SkillPage({
           />
         </section>
 
-        <Link href="/" className="w-fit text12 text-foreground/60 hover:text-foreground flex gap-2 items-center">
+        <Link
+          href="/"
+          className="w-fit text12 text-foreground/60 hover:text-foreground flex gap-2 items-center"
+        >
           <ArrowLeft  className="size-4" /> Back
         </Link>
       </main>

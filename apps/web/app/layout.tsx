@@ -3,6 +3,10 @@ import { Roboto } from "next/font/google";
 import LenisSmoothScroll from "./animations/LenisSmoothScroll";
 import ScrollBarCustom from "./components/ScrollBarCustom";
 import { Footer } from "./components/Footer";
+import { NpmIcon } from "./components/NpmIcon";
+import { ThemeToggle } from "./components/ThemeToggle";
+import { ThemeProvider } from "./theme/ThemeProvider";
+import { ThemeScript } from "./theme/ThemeScript";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -21,13 +25,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${roboto.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <ThemeScript />
+      </head>
       <body className="min-h-full flex flex-col">
-        <ScrollBarCustom />
-        <LenisSmoothScroll>
-          {children}
-          <Footer />
-        </LenisSmoothScroll>
+        <ThemeProvider>
+          <ScrollBarCustom />
+          <NpmIcon />
+          <ThemeToggle />
+          <LenisSmoothScroll>
+            {children}
+            <Footer />
+          </LenisSmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
