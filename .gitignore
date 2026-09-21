@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# CLI publish bundle (copied from repo-root skills/ on npm pack/publish)
+/packages/cli/skills
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -1,69 +1,96 @@
 # Creative Skills Kit
 
-An installable kit of creative skills and coding standards, shipped two ways:
+Installable skills and coding standards for **Claude**, **Cursor**, and other AI agents.
 
-- **CLI installer** (`packages/cli`) — a zero-dependency Node.js package you
-  run with `npx` to install, list, and validate skills directly into a
-  project's `.claude/skills/` folder.
-- **Web registry** (`apps/web`) — a Next.js catalog for browsing, searching,
-  and reading skills before you install them.
+Repo: [github.com/briskgaurav/creative-skills-kit](https://github.com/briskgaurav/creative-skills-kit)
 
-Both read from the same source of truth: the [`skills/`](./skills) directory
-at the repo root.
+---
 
-## Layout
+## What is this?
 
-```
-skills/            Source of truth. One folder per skill, each with a SKILL.md.
-packages/core/     Shared registry/parsing/validation logic (zero deps).
-packages/cli/      The `csk` CLI (installer + validator), built on core.
-apps/web/          Next.js catalog app, built on core.
-```
+A skill is a `SKILL.md` file your agent can follow — like a coding standard, a project setup guide, or a workflow.
 
-This is an npm workspaces monorepo — one `npm install` at the root links
-everything together.
+This kit:
 
-## Getting started
+1. Keeps those skills in one place
+2. Lets you install any of them into a project with one command
+
+---
+
+## Install a skill
+
+Pick a skill name (slug), then run:
 
 ```bash
-npm install
-
-# run the web catalog
-npm run dev          # http://localhost:3000
-
-# use the CLI (against the local skills/ registry)
-npm run csk -- list
-npm run csk -- validate
-npm run csk -- install creative-project-setup --dir ./.claude/skills
+npx creative-skills-kit install creative-project-setup
 ```
 
-## Installing with npx skills
+That copies it into `.claude/skills/` (Claude Code, this project).
 
-The [`skills`](https://github.com/vercel-labs/skills) CLI can install directly
-from this repo, no publishing required:
+**Cursor** — same skill, different folder:
+
+```bash
+npx creative-skills-kit install creative-project-setup --dir .agents/skills
+```
+
+**See every skill:**
+
+```bash
+npx creative-skills-kit list
+```
+
+Already installed? Add `--force` to overwrite.
+
+---
+
+## Install from GitHub
+
+Same skills, straight from this repo:
 
 ```bash
 npx skills add briskgaurav/creative-skills-kit --list
-npx skills add briskgaurav/creative-skills-kit --skill creative-project-setup -g
+npx skills add briskgaurav/creative-skills-kit --skill creative-project-setup
 ```
 
-It reads the same `skills/` directory. Project installs land in
-`.claude/skills/` for Claude Code and `.agents/skills/` for Cursor, Codex,
-and most others; `-g` installs globally instead.
+---
 
-## Authoring a skill
+## Add your own skill
 
-1. Create `skills/<your-skill-slug>/SKILL.md` (kebab-case slug).
-2. Add YAML frontmatter with `name` and `description` (required), plus
-   optionally `category`, `tags` (e.g. `[copywriting, brand]`), `version`,
-   and `license`. Any other Claude-specific frontmatter fields (e.g.
-   `disable-model-invocation`) are preserved on install but ignored by the
-   catalog. Write the skill body below the frontmatter, same as any Claude
-   Skill.
-3. Validate it: `npm run csk -- validate <your-skill-slug>`.
-4. It shows up automatically in `csk list` and in the web catalog.
+1. Create `skills/my-skill-name/SKILL.md`
+2. Add this at the top:
 
-## Learn More
+```yaml
+---
+name: My Skill Name
+description: What this skill is for.
+---
+```
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Deploy on Vercel](https://nextjs.org/docs/app/building-your-application/deploying)
+3. Write the skill below that, then check it:
+
+```bash
+npx creative-skills-kit validate my-skill-name
+```
+
+---
+
+## This repo
+
+```
+skills/         the skills (one folder each)
+packages/cli/   the installer: npx creative-skills-kit
+packages/core/  shared parsing / validation
+apps/web/       the catalog website
+```
+
+```bash
+npm install
+npm run dev    # catalog → http://localhost:3000
+```
+
+npm: [creative-skills-kit](https://www.npmjs.com/package/creative-skills-kit)
+
+---
+
+Made by **Gaurav Verma**, creative developer  
+[github.com/briskgaurav](https://github.com/briskgaurav) · [github.com/briskgaurav/creative-skills-kit](https://github.com/briskgaurav/creative-skills-kit)

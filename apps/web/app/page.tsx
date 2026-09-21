@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-1 flex-col bg-background font-sans">
-      <main className="mx-auto flex w-full max-w-[50vw] flex-1 flex-col gap-10 px-6 py-16 sm:px-16">
+      <div className="mx-auto flex w-full max-w-[50vw] flex-1 flex-col gap-10 px-6 py-16 sm:px-16">
         <header className="flex flex-col gap-2">
           <p className="text-text12 font-medium uppercase tracking-wider text-foreground/60">
             creative-skills-kit
@@ -85,7 +85,7 @@ export default function Home() {
             </div>
           )}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

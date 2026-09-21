@@ -50,6 +50,10 @@ body {
   font-family: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+::selection{
+  background: var(--foreground);
+  color: var(--background);
+}
 
 /* Keyboard focus stays visible everywhere */
 :focus-visible {

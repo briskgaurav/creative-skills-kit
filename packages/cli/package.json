@@ -1,18 +1,26 @@
 {
   "name": "creative-skills-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Installer and validator CLI for creative-skills-kit skill packages. Zero runtime dependencies.",
   "type": "module",
   "bin": {
-    "csk": "./bin/csk.js"
+    "csk": "./bin/csk.js",
+    "creative-skills-kit": "./bin/csk.js"
   },
   "files": [
     "bin",
     "src",
-    "skills"
+    "skills",
+    "README.md"
   ],
+  "scripts": {
+    "prepack": "node ./scripts/bundle-skills.js"
+  },
   "dependencies": {
-    "@creative-skills-kit/core": "*"
+    "@creative-skills-kit/core": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "engines": {
     "node": ">=18"
