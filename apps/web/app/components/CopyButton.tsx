@@ -8,6 +8,7 @@ import { Check, Copy } from "lucide-react";
 type CopyButtonProps = {
   text: string;
   className?: string;
+  iconClassName?: string;
 };
 
 async function copyToClipboard(text: string) {
@@ -36,7 +37,11 @@ async function copyToClipboard(text: string) {
   return ok;
 }
 
-export function CopyButton({ text, className = "" }: CopyButtonProps) {
+export function CopyButton({
+  text,
+  className = "",
+  iconClassName = "",
+}: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const copyIconRef = useRef<SVGSVGElement>(null);
@@ -75,8 +80,8 @@ export function CopyButton({ text, className = "" }: CopyButtonProps) {
       aria-label={copied ? "Copied to clipboard" : "Copy to clipboard"}
       className={`relative flex size-7 items-center justify-center text-foreground/40 cursor-pointer hover:text-emerald-500 ${className}`}
     >
-      <Copy ref={copyIconRef} className="absolute size-3.5" aria-hidden="true" />
-      <Check ref={checkIconRef} className="absolute size-3.5" aria-hidden="true" />
+      <Copy ref={copyIconRef} className={`absolute size-3.5 ${iconClassName}`} aria-hidden="true" />
+      <Check ref={checkIconRef} className={`absolute size-3.5 ${iconClassName}`} aria-hidden="true" />
     </button>
   );
 }

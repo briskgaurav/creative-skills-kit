@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useState } from "react";
+import { startReveal } from "./viewTransition";
 
 type Theme = "light" | "dark";
 
@@ -36,39 +37,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     (origin?: { x: number; y: number }) => {
       const next = theme === "dark" ? "light" : "dark";
 
-      const runSwap = () => {
+      startReveal("theme-swap", origin, () => {
         setTheme(next);
         applyTheme(next);
         window.localStorage.setItem(STORAGE_KEY, next);
-      };
-
-      const supportsViewTransitions =
-        typeof document !== "undefined" &&
-        "startViewTransition" in document &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (!supportsViewTransitions) {
-        runSwap();
-        return;
-      }
-
-      const x = origin?.x ?? window.innerWidth / 2;
-      const y = origin?.y ?? window.innerHeight / 2;
-      const maxRadius = Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
-      );
-
-      document.documentElement.style.setProperty("--theme-toggle-x", `${x}px`);
-      document.documentElement.style.setProperty("--theme-toggle-y", `${y}px`);
-      document.documentElement.style.setProperty(
-        "--theme-toggle-radius",
-        `${maxRadius}px`
-      );
-
-      const transition = document.startViewTransition(runSwap);
-
-      transition.ready.catch(() => {});
+      });
     },
     [theme]
   );

@@ -1,20 +1,23 @@
-import Link from "next/link";
+import { TransitionLink as Link } from "./components/TransitionLink";
 import { ArrowRight } from "lucide-react";
 import { listSkills, displayName } from "./lib/skills";
 import { CornerSpans } from "./components/CornerSpans";
+import { CopyButton } from "./components/CopyButton";
+
+const INSTALL_COMMAND = "npx creative-skills-kit install <slug-name>";
 
 export default function Home() {
   const skills = listSkills();
 
   return (
     <div className="flex flex-1 flex-col bg-background font-sans">
-      <div className="mx-auto flex w-full max-w-[50vw] flex-1 flex-col gap-10 px-6 py-16 sm:px-16">
+      <div className="mx-auto max-md:max-w-[100vw] flex w-full max-w-[50vw] flex-1 flex-col gap-10 px-6 py-16 sm:px-16">
         <header className="flex flex-col gap-2">
           <p className="text-text12 font-medium uppercase tracking-wider text-foreground/60">
             creative-skills-kit
           </p>
 
-          <h1 className="text32 mt-4 font-semibold text-balance text-foreground">
+          <h1 className="text32 mt-4 font-medium uppercase text-balance text-foreground">
             Installable skills and coding standards.
           </h1>
 
@@ -24,11 +27,18 @@ export default function Home() {
             Install any of them into a project with the CLI:
           </p>
 
-          <CornerSpans className="mt-4 w-fit" borderClassName="border-foreground">
-            <pre className="overflow-x-auto bg-foreground/20 px-[1vw] py-[.4vw] font-sans text-text12 text-foreground">
-              npx creative-skills-kit install &lt;slug-name&gt;
-            </pre>
-          </CornerSpans>
+          <div className="mt-4 flex w-fit items-center gap-4">
+            <CornerSpans className="w-fit" borderClassName="border-foreground">
+              <pre className="overflow-x-auto bg-foreground/20 px-[1vw] py-[.4vw] font-sans text-text12 text-foreground">
+                {INSTALL_COMMAND}
+              </pre>
+            </CornerSpans>
+            <CopyButton
+              text={INSTALL_COMMAND}
+              className="size-5!"
+              iconClassName="!size-full"
+            />
+          </div>
         </header>
 
         <section className="flex -mt-8  py-10 flex-col gap-2.5">

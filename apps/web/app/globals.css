@@ -79,32 +79,81 @@ html {
   scrollbar-width: none;  /* Firefox */
 }
 
-/* Theme toggle: circular clip-path reveal from the click origin, driven
-   through the View Transitions API. The incoming theme's snapshot expands
-   as a growing circle instead of the browser's default cross-fade. */
+/* View Transitions API animations. The theme toggle and page navigation both
+   animate the `root` snapshot, so each tags its transition with a type
+   (`theme-swap` / `page-nav`) and the rules below key off
+   `:active-view-transition-type()`. */
 @supports (view-transition-name: root) {
-  ::view-transition-group(root) {
-    animation-duration: 0.6s;
+  /* Clicks during the animation would otherwise be swallowed by the overlay. */
+  ::view-transition {
+    pointer-events: none;
   }
 
-  ::view-transition-old(root) {
-    animation: none;
-  }
-
-  ::view-transition-new(root) {
-    animation: theme-reveal 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-    mix-blend-mode: normal;
-  }
-
-  @keyframes theme-reveal {
+  /* Theme swap: circular clip-path wipe from the toggle. The old paint stays
+     put and the incoming theme expands over it as a growing circle. */
+  @keyframes circle-reveal {
     from {
-      clip-path: circle(0px at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
+      clip-path: circle(0px at var(--reveal-x, 50%) var(--reveal-y, 50%));
     }
     to {
       clip-path: circle(
-        var(--theme-toggle-radius, 150%) at var(--theme-toggle-x, 50%)
-          var(--theme-toggle-y, 50%)
+        var(--reveal-radius, 150%) at var(--reveal-x, 50%) var(--reveal-y, 50%)
       );
     }
+  }
+
+  html:active-view-transition-type(theme-swap) {
+    &::view-transition-group(root) {
+      animation-duration: 0.6s;
+    }
+
+    &::view-transition-old(root) {
+      animation: none;
+    }
+
+    &::view-transition-new(root) {
+      animation: circle-reveal 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+      mix-blend-mode: normal;
+    }
+  }
+
+  /* Page navigation: a straight cross-fade. Both snapshots are stacked, so
+     the two halves run over the same window — the outgoing route fades out
+     as the incoming one fades in. */
+  @keyframes page-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes page-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  html:active-view-transition-type(page-nav) {
+    &::view-transition-group(root) {
+      animation-duration: 0.45s;
+    }
+
+    &::view-transition-old(root) {
+      animation: page-fade-out 0.45s ease-in-out both;
+      mix-blend-mode: normal;
+    }
+
+    &::view-transition-new(root) {
+      animation: page-fade-in 0.45s ease-in-out both;
+      mix-blend-mode: normal;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }

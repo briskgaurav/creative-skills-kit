@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink as Link } from "../../components/TransitionLink";
 import { notFound } from "next/navigation";
 import { listSkills, getSkill } from "../../lib/skills";
 import { CodeBlock } from "../../components/CodeBlock";

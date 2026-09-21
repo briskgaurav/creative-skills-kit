@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import Link from "next/link";
+import { TransitionLink as Link } from "./TransitionLink";
 import { usePathname } from "next/navigation";
 
 type BreadcrumbProps = {
