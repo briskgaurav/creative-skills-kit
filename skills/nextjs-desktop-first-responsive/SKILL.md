@@ -10,7 +10,7 @@ description: >-
   at a time: tablet and mobile, then wait for approval before the next section.
   Must not change the desktop UI at viewport >= 1025px. Works as a global skill
   or a project-local skill.
-category: workflow
+category: skill
 ---
 
 # Next.js Desktop First Responsive

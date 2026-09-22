@@ -5,6 +5,7 @@ description: >-
   R3F/Three, Lottie, and CMS, then pulls fonts, type sizes, and colors from Figma. Use only
   when explicitly invoked with /creative-project-setup, or when the user asks to set up a new
   creative Next.js / studio site from a Figma file.
+category: skill
 disable-model-invocation: true
 ---
 

@@ -6,6 +6,7 @@ import { CopyButton } from "../../components/CopyButton";
 import { Breadcrumb } from "../../components/Breadcrumb";
 import { InstallCommand } from "../../components/InstallCommand";
 import { ArrowLeft } from "lucide-react";
+import { CategoryStamp } from "../../components/CategoryStamp";
 
 export function generateStaticParams() {
   return listSkills().map((skill) => ({ slug: skill.slug }));
@@ -86,9 +87,12 @@ export default async function SkillPage({
         />
 
         <header className="flex flex-col gap-4 mt-10 max-md:mt-0">
-          <h1 className="text32 font-medium uppercase text-balance text-foreground">
-            {displayName(skill.name)}
-          </h1>
+          <div className="flex items-start justify-between gap-4">
+            <h1 className="text32 font-medium uppercase text-balance text-foreground">
+              {displayName(skill.name)}
+            </h1>
+            {skill.category && <CategoryStamp category={skill.category} />}
+          </div>
 
           {skill.description && (
             <p className="max-w-2xl text12 text-pretty text-foreground/60">

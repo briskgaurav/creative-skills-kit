@@ -1,7 +1,7 @@
 import { TransitionLink as Link } from "./components/TransitionLink";
-import { ArrowRight } from "lucide-react";
 import { listSkills, displayName } from "./lib/skills";
 import { CornerSpans } from "./components/CornerSpans";
+import { CategoryStamp } from "./components/CategoryStamp";
 import { CopyButton } from "./components/CopyButton";
 
 const INSTALL_COMMAND = "npx creative-skills-kit install <slug-name>";
@@ -43,7 +43,7 @@ export default function Home() {
 
         <section className="flex -mt-8  pt-10 flex-col gap-2.5">
           <div className="uppercase opacity-60">
-            <p className="text12">[ Available Skills : {skills.length} ]</p>
+            <p className="text12">[ Kit  : {skills.length} ]</p>
           </div>
 
           {skills.length === 0 ? (
@@ -56,43 +56,35 @@ export default function Home() {
               </p>
             </div>
           ) : (
-            <div className="mt-2">
-              <ul className="divide-y divide-foreground/20">
-                {skills.map((skill) => {
-                  const meta = [skill.slug, skill.category]
-                    .filter(Boolean)
-                    .join(" · ");
-                  return (
-                    <li key={skill.slug}>
-                      <Link
-                        href={`/skills/${skill.slug}`}
-                        className="flex items-start gap-4 py-5"
-                      >
-                        <div className="flex min-w-0 flex-1 flex-col gap-4">
-                          <h3 className="text-text18 font-medium text-foreground">
-                            {displayName(skill.name)}
-                          </h3>
-                          {skill.description && (
-                            <p className="text-text12 text-pretty text-foreground/60">
-                              {skill.description}
-                            </p>
-                          )}
-                          <div className="flex items-center justify-between">
-                            <p className="text-text12 text-foreground/40">
-                              {meta}
-                            </p>
-                            <ArrowRight
-                              className="mt-1 size-4 shrink-0 text-foreground/40"
-                              aria-hidden="true"
-                            />
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <ul className="mt-2 flex flex-col gap-[1vw] max-md:gap-4">
+              {skills.map((skill) => {
+                return (
+                  <li key={skill.slug}>
+                    <Link
+                      href={`/skills/${skill.slug}`}
+                      className="flex w-full flex-col gap-4 bg-foreground/4 px-[1.6vw] py-[1.4vw] transition-all duration-300 hover:bg-foreground/8 max-md:gap-3 max-md:px-5 max-md:py-5"
+                    >
+                      <h3 className="text-text18 text-foreground">
+                        {displayName(skill.name)}
+                      </h3>
+                      {skill.description && (
+                        <p className="text12 text-pretty text-foreground/60">
+                          {skill.description}
+                        </p>
+                      )}
+                      <div className="flex items-center justify-between gap-4">
+                        <p className="text-text12 text-foreground/40">
+                          {skill.slug}
+                        </p>
+                        {skill.category && (
+                          <CategoryStamp category={skill.category} />
+                        )}
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           )}
         </section>
       </div>
