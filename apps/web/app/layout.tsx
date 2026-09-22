@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import "@fontsource/roboto/latin-300.css";
+import "@fontsource/roboto/latin-400.css";
+import "@fontsource/roboto/latin-500.css";
+import "@fontsource/roboto/latin-700.css";
+import "@fontsource/roboto/latin-900.css";
 import LenisSmoothScroll from "./animations/LenisSmoothScroll";
 import ScrollBarCustom from "./components/ScrollBarCustom";
 import { Footer } from "./components/Footer";
@@ -8,12 +12,6 @@ import { ThemeToggle } from "./components/ThemeToggle";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { ThemeScript } from "./theme/ThemeScript";
 import "./globals.css";
-
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700", "900"],
-  subsets: ["latin"],
-  variable: "--font-roboto",
-});
 
 export const metadata: Metadata = {
   title: "Creative Skills Kit",
@@ -24,7 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${roboto.variable} h-full antialiased`}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
       <head>
