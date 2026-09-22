@@ -34,7 +34,10 @@ npx creative-skills-kit install creative-project-setup --dir ~/.cursor/skills
 
 Overwrite: add `--force`.
 
+The same commands install `nextjs-desktop-first-responsive`.
+
 ---
 
-Made by **Gaurav Verma**, creative developer  
-[github.com/briskgaurav](https://github.com/briskgaurav)
+Made by **Gaurav Verma**, creative dev  
+Portfolio: [briskgaurav.in](https://briskgaurav.in)  
+GitHub: [github.com/briskgaurav](https://github.com/briskgaurav)
