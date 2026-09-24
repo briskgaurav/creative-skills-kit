@@ -26,7 +26,7 @@ npx creative-skills-kit install creative-project-setup --dir ~/.cursor/skills
 
 Add `--force` to overwrite.
 
-The same commands install `nextjs-desktop-first-responsive`.
+The same commands install `nextjs-desktop-first-responsive` and `nextjs-page-transition`.
 
 Source: [github.com/briskgaurav/creative-skills-kit](https://github.com/briskgaurav/creative-skills-kit)
 
