@@ -14,8 +14,25 @@ import { ThemeScript } from "./theme/ThemeScript";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://skills.briskgaurav.in"),
   title: "Creative Skills Kit",
   description: "An installable registry of creative skills and coding standards.",
+  openGraph: {
+    title: "Creative Skills Kit",
+    description: "An installable registry of creative skills and coding standards.",
+    images: [
+      {
+        url: "/og.png",
+        width: 1917,
+        height: 1071,
+        alt: "Creative Skills Kit",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
